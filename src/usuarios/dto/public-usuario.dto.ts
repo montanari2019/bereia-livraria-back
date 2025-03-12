@@ -1,38 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  IsStrongPassword,
-} from 'class-validator';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
 import { IsCpf } from 'src/custom_validators/cpf.validator';
 
-export class CreateUsuarioDto {
+export class UsuarioPublicDto {
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @IsCpf()
   doc: string;
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @IsEmail()
   email: string;
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   name: string;
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   phone_number: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  @IsStrongPassword()
-  password: string;
 }
