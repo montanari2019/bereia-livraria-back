@@ -7,8 +7,8 @@ import { EnvConfigServiceProps } from './env_config.interface';
 export class EnvConfigService implements EnvConfigServiceProps {
   constructor(private readonly configService: ConfigService) {}
 
-  getHashPasswordEnv(): string {
-    const nodeEnv = String(this.configService.get<string>('PASSWORD_HASH'));
+  getHashPasswordEnv(): number {
+    const nodeEnv = Number(this.configService.get<string>('PASSWORD_HASH'));
     return nodeEnv;
   }
 }

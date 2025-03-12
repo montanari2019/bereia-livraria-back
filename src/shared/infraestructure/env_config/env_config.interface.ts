@@ -1,3 +1,3 @@
 export interface EnvConfigServiceProps {
-  getHashPasswordEnv(): string;
+  getHashPasswordEnv(): number;
 }
