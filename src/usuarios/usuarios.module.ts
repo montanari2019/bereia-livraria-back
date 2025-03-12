@@ -8,6 +8,7 @@ import { CryptoPasswordUsuariosService } from './services/cryptoPassword.service
 import { UpdateUsuariosService } from './services/updateUser.service';
 import { DeleteUsuariosService } from './services/deleteUser.service';
 import { FindUniqueUserService } from './services/findUnique.service';
+import { FindPasswordUserService } from './services/findPasswordUser.service';
 
 @Module({
   controllers: [UsuariosController],
@@ -18,6 +19,7 @@ import { FindUniqueUserService } from './services/findUnique.service';
     CryptoPasswordUsuariosService,
     FindUniqueUserService,
     DeleteUsuariosService,
+    FindPasswordUserService,
   ],
 })
 export class UsuariosModule {}
