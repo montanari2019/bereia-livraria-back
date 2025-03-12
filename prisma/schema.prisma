@@ -17,7 +17,7 @@ model usuario {
   id           String @id @default(uuid()) @map("_id")
   email        String @unique
   name         String
-  doc          String
+  doc          String @unique
   phone_number String
   password     String
 }

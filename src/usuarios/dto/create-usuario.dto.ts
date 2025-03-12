@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { usuario } from '@prisma/client';
 import {
   IsEmail,
   IsNotEmpty,
@@ -8,7 +7,7 @@ import {
 } from 'class-validator';
 import { IsCpf } from 'src/custom_validators/cpf.validator';
 
-export class CreateUsuarioDto implements Partial<usuario> {
+export class CreateUsuarioDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
