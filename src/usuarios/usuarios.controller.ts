@@ -1,43 +1,45 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
 } from '@nestjs/common';
-import { UsuariosService } from './services/usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { UsuarioPublicDto } from './dto/public-usuario.dto';
 import { CreateUsuariosService } from './services/createUser.service';
+import { UpdateUsuariosService } from './services/updateUser.service';
+import { FindUniqueUserService } from './services/findUnique.service';
+import { DeleteUsuariosService } from './services/deleteUser.service';
 
-@Controller('usuarios')
+@Controller('usuario')
 export class UsuariosController {
-  constructor(private readonly usuariosCreateService: CreateUsuariosService) {}
+  constructor(
+    private readonly usuarioCreateService: CreateUsuariosService,
+    private readonly usuarioUpdateService: UpdateUsuariosService,
+    private readonly usuarioFindUniqueService: FindUniqueUserService,
+    private readonly usuarioDeleteService: DeleteUsuariosService,
+  ) {}
 
   @Post()
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
-    return this.usuariosCreateService.createUser(createUsuarioDto);
+    return this.usuarioCreateService.createUser(createUsuarioDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.usuariosService.findAll();
-  // }
+  @Get('findunique/:email')
+  findOne(@Param('email') email: string) {
+    return this.usuarioFindUniqueService.findUniqueUser(email);
+  }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.usuariosService.findOne(+id);
-  // }
+  @Put('update/:id')
+  update(@Param('id') id: string, @Body() updateUsuarioDto: UsuarioPublicDto) {
+    return this.usuarioUpdateService.updateUser(updateUsuarioDto, id);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-  //   return this.usuariosService.update(+id, updateUsuarioDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.usuariosService.remove(+id);
-  // }
+  @Delete('delete/:id')
+  remove(@Param('id') id: string) {
+    return this.usuarioDeleteService.deleteUser(id);
+  }
 }
