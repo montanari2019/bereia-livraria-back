@@ -22,6 +22,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const data = await this.JwtValidatorService.validateToken(token);
 
     request.payload = data;
+
     return true;
   }
 }
