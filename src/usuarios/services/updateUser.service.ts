@@ -9,6 +9,23 @@ import { UsuarioPublicDto } from '../dto/public-usuario.dto';
 @Injectable()
 export class UpdateUsuariosService implements UpdateUsuariosServiceInterface {
   constructor(private prisma: PrismaService) {}
+  async blockedAccount(email: string): Promise<void> {
+    await this.prisma.usuario
+      .update({
+        where: { email },
+        data: {
+          active_acount: false,
+        },
+      })
+      .catch((error) => {
+        throw new InternalServerErrorException([
+          'Erro ao bloquear o usuário',
+          error,
+        ]);
+      });
+
+    return;
+  }
   async updateUser(updateUser: UsuarioPublicDto, user_id: string) {
     try {
       await this.findUserUpdate(user_id);
