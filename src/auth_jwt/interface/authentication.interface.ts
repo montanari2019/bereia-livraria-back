@@ -7,8 +7,4 @@ export interface AuthenticationServicesInterface {
     email: string,
     password: string,
   ) => Promise<CreateAuthJwtDto>;
-  validatePassword: (
-    passwordInterno: string,
-    passwordExterno: string,
-  ) => Promise<void>;
 }

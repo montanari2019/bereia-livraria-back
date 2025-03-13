@@ -9,7 +9,11 @@ async function bootstrap() {
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
   const config = new DocumentBuilder()
-
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    })
     .setTitle('Bereia Livrarias')
     .setDescription('The Bereia Livrarias API description')
     .setVersion('1.0')

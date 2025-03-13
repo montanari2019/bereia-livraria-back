@@ -15,16 +15,7 @@ export class GenerateTokenService implements GenerateTokenInterface {
     payload: any,
     expiresIn: string,
   ): Promise<CreateAuthJwtDto> {
-    const secretKey = this.envConfigService.getHashLoginToken();
-    if (!secretKey) {
-      throw new Error('JWT secret key is not defined');
-    }
-
-    const accessToken = this.jwtService.sign(payload, {
-      expiresIn,
-      algorithm: 'HS256',
-      secret: secretKey,
-    });
+    const accessToken = this.jwtService.sign(payload);
 
     return { access_token: accessToken };
   }
