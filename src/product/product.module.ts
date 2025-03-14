@@ -5,10 +5,17 @@ import { S3Module } from 'src/s3/s3.module';
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { CreateProductService } from './services/createProduct.service';
+import { UpdateProductService } from './services/updateProduct.service';
+import { FindUniqueProductService } from './services/findUniqueProduct.service';
 
 @Module({
   controllers: [ProductController],
-  providers: [ProductService, CreateProductService],
+  providers: [
+    ProductService,
+    CreateProductService,
+    UpdateProductService,
+    FindUniqueProductService,
+  ],
   imports: [PrismaModule, AuthJwtModule, S3Module],
 })
 export class ProductModule {}
