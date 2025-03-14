@@ -18,3 +18,14 @@ model usuario {
   active_acount Boolean @default(false)
   roles         String  @default("COMMON_USER")
 }
+
+model product {
+  id          String  @id @default(uuid()) @map("_id")
+  name        String
+  description String
+  price       Float
+  stock       Int     @default(1)
+  category    String
+  available   Boolean @default(true)
+  image_url   String
+}

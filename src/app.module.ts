@@ -5,9 +5,10 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthJwtModule } from './auth_jwt/auth_jwt.module';
 import { S3Module } from './s3/s3.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
-  imports: [UsuariosModule, ConfigModule.forRoot(), AuthJwtModule, S3Module],
+  imports: [UsuariosModule, ConfigModule.forRoot(), AuthJwtModule, S3Module, ProductModule],
   controllers: [AppController],
   providers: [AppService],
 })

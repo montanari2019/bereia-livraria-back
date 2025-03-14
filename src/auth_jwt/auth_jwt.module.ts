@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { PrismModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from 'src/prisma/prisma.module';
 import { EnvConfigModule } from 'src/shared/infraestructure/env_config/env-config.module';
 import { UsuariosModule } from 'src/usuarios/usuarios.module';
 import { AuthJwtController } from './auth_jwt.controller';
@@ -17,7 +17,7 @@ import { ValidatorPasswordsServices } from './services/validatePassword.service'
     ValidateTokenServices,
     ValidatorPasswordsServices,
   ],
-  imports: [PrismModule, UsuariosModule, EnvConfigModule, JwtModule],
+  imports: [PrismaModule, UsuariosModule, EnvConfigModule, JwtModule],
   exports: [
     AuthenticationServices,
     GenerateTokenService,

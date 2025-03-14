@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { UsuariosController } from './usuarios.controller';
 import { CreateUsuariosService } from './services/createUser.service';
-import { PrismModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from 'src/prisma/prisma.module';
 import { EnvConfigModule } from 'src/shared/infraestructure/env_config/env-config.module';
 import { CryptoPasswordUsuariosService } from './services/cryptoPassword.service';
 import { UpdateUsuariosService } from './services/updateUser.service';
@@ -22,7 +22,7 @@ import { UpdateTentativasService } from './services/updateTentativasLogin.servic
     FindPasswordUserService,
     UpdateTentativasService,
   ],
-  imports: [PrismModule, EnvConfigModule],
+  imports: [PrismaModule, EnvConfigModule],
 
   providers: [
     CreateUsuariosService,
