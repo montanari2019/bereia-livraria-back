@@ -7,6 +7,7 @@ import { ProductService } from './product.service';
 import { CreateProductService } from './services/createProduct.service';
 import { UpdateProductService } from './services/updateProduct.service';
 import { FindUniqueProductService } from './services/findUniqueProduct.service';
+import { DeleteProductService } from './services/deletarProduct.services';
 
 @Module({
   controllers: [ProductController],
@@ -15,6 +16,7 @@ import { FindUniqueProductService } from './services/findUniqueProduct.service';
     CreateProductService,
     UpdateProductService,
     FindUniqueProductService,
+    DeleteProductService,
   ],
   imports: [PrismaModule, AuthJwtModule, S3Module],
 })

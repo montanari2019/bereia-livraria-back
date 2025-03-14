@@ -18,6 +18,7 @@ import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateProductWithFileDto } from './dto/create-product-with-file.dto';
 import { UpdateProductService } from './services/updateProduct.service';
+import { DeleteProductService } from './services/deletarProduct.services';
 
 @Controller('product')
 export class ProductController {
@@ -25,6 +26,7 @@ export class ProductController {
     private readonly productService: ProductService,
     private readonly createProductService: CreateProductService,
     private readonly updateProductService: UpdateProductService,
+    private readonly deleteProductService: DeleteProductService,
   ) {}
 
   @Post('create')
@@ -80,8 +82,8 @@ export class ProductController {
     return this.productService.findOne(+id);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
+    return this.deleteProductService.deleteProduct(id);
   }
 }
