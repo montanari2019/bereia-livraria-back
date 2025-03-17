@@ -15,7 +15,10 @@ export class GenerateTokenService implements GenerateTokenInterface {
     payload: any,
     expiresIn: string,
   ): Promise<CreateAuthJwtDto> {
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload, {
+      secret: this.envConfigService.getHashLoginToken(),
+      expiresIn: this.envConfigService.getExpireLoginToken(),
+    });
 
     return { access_token: accessToken };
   }
