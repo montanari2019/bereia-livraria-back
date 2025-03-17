@@ -3,12 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseInterceptors,
   UploadedFile,
   Put,
+  Query,
 } from '@nestjs/common';
 
 import { CreateProductDto } from './dto/create-product.dto';
@@ -20,6 +20,9 @@ import { CreateProductWithFileDto } from './dto/create-product-with-file.dto';
 import { UpdateProductService } from './services/updateProduct.service';
 import { DeleteProductService } from './services/deletarProduct.services';
 import { CategoriasService } from './services/categorias.service';
+import { ProductListagemService } from './services/productListagem.service';
+import { ProductSearchByTermoService } from './services/productSearch.service';
+import { ProductSearchByCategoryService } from './services/productSearcByCategory.service';
 
 @Controller('product')
 export class ProductController {
@@ -28,6 +31,9 @@ export class ProductController {
     private readonly updateProductService: UpdateProductService,
     private readonly deleteProductService: DeleteProductService,
     private readonly categoriasProducts: CategoriasService,
+    private readonly listagemProducts: ProductListagemService,
+    private readonly searchByTermoProducts: ProductSearchByTermoService,
+    private readonly searchByCategoriaProducts: ProductSearchByCategoryService,
   ) {}
 
   @Post('create')
@@ -76,6 +82,25 @@ export class ProductController {
   @Get('categorias')
   findAll() {
     return this.categoriasProducts.ListarCategorias();
+  }
+
+  @Get('all')
+  async listarProdutos(@Query('page') page: number = 1): Promise<any> {
+    return this.listagemProducts.listarProduct(page);
+  }
+  @Get('/termo')
+  async listarProdutosByTermo(
+    @Query('page') page: number = 1,
+    @Query('value') value: string,
+  ): Promise<any> {
+    return this.searchByTermoProducts.searchProductsByTerm(value, page);
+  }
+  @Get('/categoria')
+  async listarProdutosByCategoria(
+    @Query('page') page: number = 1,
+    @Query('value') value: string,
+  ): Promise<any> {
+    return this.searchByCategoriaProducts.searchProductsByCategory(value, page);
   }
 
   @Delete('delete/:id')

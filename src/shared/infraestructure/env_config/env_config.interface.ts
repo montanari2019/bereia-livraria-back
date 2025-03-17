@@ -6,4 +6,5 @@ export interface EnvConfigServiceProps {
   getAwsS3RegionBucket(): string;
   getAwsS3AccessIdKey(): string;
   getAwsS3SecreteKey(): string;
+  getItensPerPage(): number;
 }

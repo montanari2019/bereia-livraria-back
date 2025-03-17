@@ -15,7 +15,7 @@ export class CachingService implements CachingInterface {
     await this.cacheManager.set(key, value, ttl);
   }
 
-  async clearCaching<T>(key: string): Promise<void> {
+  async clearCaching(key: string): Promise<void> {
     await this.cacheManager.del(key);
   }
 }

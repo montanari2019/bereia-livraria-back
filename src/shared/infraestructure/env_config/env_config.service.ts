@@ -6,6 +6,12 @@ import { EnvConfigServiceProps } from './env_config.interface';
 @Injectable()
 export class EnvConfigService implements EnvConfigServiceProps {
   constructor(private readonly configService: ConfigService) {}
+  getItensPerPage(): number {
+    const nodeEnv = Number(
+      this.configService.get<number>('ITENS_PER_PAGE_SIZE'),
+    );
+    return nodeEnv;
+  }
   getAwsS3NameBucket(): string {
     const nodeEnv = String(
       this.configService.get<string>('AWS_S3_BUCKET_NAME'),

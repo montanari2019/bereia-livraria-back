@@ -9,6 +9,10 @@ import { FindUniqueProductService } from './services/findUniqueProduct.service';
 import { DeleteProductService } from './services/deletarProduct.services';
 import { CategoriasService } from './services/categorias.service';
 import { CachingModule } from 'src/caching/caching.module';
+import { ProductListagemService } from './services/productListagem.service';
+import { EnvConfigModule } from 'src/shared/infraestructure/env_config/env-config.module';
+import { ProductSearchByTermoService } from './services/productSearch.service';
+import { ProductSearchByCategoryService } from './services/productSearcByCategory.service';
 
 @Module({
   controllers: [ProductController],
@@ -18,7 +22,16 @@ import { CachingModule } from 'src/caching/caching.module';
     UpdateProductService,
     FindUniqueProductService,
     DeleteProductService,
+    ProductListagemService,
+    ProductSearchByTermoService,
+    ProductSearchByCategoryService,
   ],
-  imports: [PrismaModule, AuthJwtModule, S3Module, CachingModule],
+  imports: [
+    PrismaModule,
+    AuthJwtModule,
+    S3Module,
+    CachingModule,
+    EnvConfigModule,
+  ],
 })
 export class ProductModule {}
