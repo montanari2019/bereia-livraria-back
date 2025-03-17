@@ -17,11 +17,16 @@ export class FindUniqueProductService
     id_product: string,
   ): Promise<FindUniqueProductDto> {
     try {
-      const product = await this.Prisma.product.findUnique({
-        where: {
-          id: id_product,
-        },
-      });
+      const product = await this.Prisma.product
+        .findUnique({
+          where: {
+            id: id_product,
+          },
+        })
+        .catch((error) => {
+          console.log(error.mensage);
+          throw new BadRequestException(['Error ao buscar produto']);
+        });
 
       if (product === null) {
         throw new NotFoundException(['Product not found']);

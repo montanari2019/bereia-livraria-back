@@ -1,10 +1,14 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { S3DeleteImagemService } from 'src/s3/services/s3DeleteImage.service';
 import { S3UploadImagemService } from 'src/s3/services/s3UploadImage.service';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { UpdateProductInterface } from '../interfaces/update-product.interface';
 import { FindUniqueProductService } from './findUniqueProduct.service';
-import { S3DeleteImagemService } from 'src/s3/services/s3DeleteImage.service';
 
 @Injectable()
 export class UpdateProductService implements UpdateProductInterface {
@@ -52,14 +56,19 @@ export class UpdateProductService implements UpdateProductInterface {
         await this.findUniqueProductService.fundUniqueProductById(id_product);
       const { urlFile } = await this.uploadImage.uploadFile(file);
 
-      await this.Prisma.product.update({
-        where: {
-          id: id_product,
-        },
-        data: {
-          image_url: urlFile,
-        },
-      });
+      await this.Prisma.product
+        .update({
+          where: {
+            id: id_product,
+          },
+          data: {
+            image_url: urlFile,
+          },
+        })
+        .catch((error) => {
+          console.log(error.mensage);
+          throw new BadRequestException(['Error ao alterar imagem do produto']);
+        });
 
       await this.deleteImage.deleteFile(data.image_url);
 

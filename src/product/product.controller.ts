@@ -1,28 +1,28 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Param,
+  Controller,
   Delete,
-  UseInterceptors,
-  UploadedFile,
+  Get,
+  Param,
+  Post,
   Put,
   Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
+import { CreateProductWithFileDto } from './dto/create-product-with-file.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { CreateProductService } from './services/createProduct.service';
-import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { CreateProductWithFileDto } from './dto/create-product-with-file.dto';
-import { UpdateProductService } from './services/updateProduct.service';
-import { DeleteProductService } from './services/deletarProduct.services';
 import { CategoriasService } from './services/categorias.service';
+import { CreateProductService } from './services/createProduct.service';
+import { DeleteProductService } from './services/deletarProduct.services';
 import { ProductListagemService } from './services/productListagem.service';
-import { ProductSearchByTermoService } from './services/productSearch.service';
 import { ProductSearchByCategoryService } from './services/productSearcByCategory.service';
+import { ProductSearchByTermoService } from './services/productSearch.service';
+import { UpdateProductService } from './services/updateProduct.service';
 
 @Controller('product')
 export class ProductController {
