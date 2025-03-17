@@ -10,7 +10,7 @@ import {
   UploadedFile,
   Put,
 } from '@nestjs/common';
-import { ProductService } from './product.service';
+
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductService } from './services/createProduct.service';
@@ -19,14 +19,15 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateProductWithFileDto } from './dto/create-product-with-file.dto';
 import { UpdateProductService } from './services/updateProduct.service';
 import { DeleteProductService } from './services/deletarProduct.services';
+import { CategoriasService } from './services/categorias.service';
 
 @Controller('product')
 export class ProductController {
   constructor(
-    private readonly productService: ProductService,
     private readonly createProductService: CreateProductService,
     private readonly updateProductService: UpdateProductService,
     private readonly deleteProductService: DeleteProductService,
+    private readonly categoriasProducts: CategoriasService,
   ) {}
 
   @Post('create')
@@ -72,18 +73,13 @@ export class ProductController {
     return this.updateProductService.updateImageProductFile(file, id_product);
   }
 
-  @Get()
+  @Get('categorias')
   findAll() {
-    return this.productService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+    return this.categoriasProducts.ListarCategorias();
   }
 
   @Delete('delete/:id')
-  remove(@Param('id') id: string) {
-    return this.deleteProductService.deleteProduct(id);
+  delete(@Param('id') id_product: string) {
+    return this.deleteProductService.deleteProduct(id_product);
   }
 }

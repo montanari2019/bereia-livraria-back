@@ -1,0 +1,134 @@
+[
+    {
+        "_id": "99e4a190-a278-48d6-b0d3-b0a5b59de064",
+        "name": "Produto novo teste 2",
+        "description": "lasdbkfjsgdfhjgbskljifhglahdkgdghgwrf",
+        "price": 250.25,
+        "stock": {
+            "$numberLong": "1"
+        },
+        "category": "teste",
+        "available": true,
+        "image_url": "https://bereialivrarias.s3.us-east-2.amazonaws.com/1e7fe05a-d86c-465e-b8b3-1eee2753cd01.png"
+    },
+    {
+        "_id": "8a2f97b2-78d1-4a6e-bf4d-024bdc2e7a98",
+        "name": "Caneta Premium",
+        "description": "Caneta esferográfica azul de alta qualidade",
+        "price": 15.99,
+        "stock": {
+            "$numberLong": "50"
+        },
+        "category": "escrita",
+        "available": true,
+        "image_url": "https://example.com/caneta.png"
+    },
+    {
+        "_id": "fa68bc4b-930c-4ae1-94c9-cac6e1181b6e",
+        "name": "Cadeira Gamer",
+        "description": "Cadeira ergonômica para gamers profissionais",
+        "price": 1200.00,
+        "stock": {
+            "$numberLong": "5"
+        },
+        "category": "mobiliario",
+        "available": true,
+        "image_url": "https://example.com/cadeira_gamer.png"
+    },
+    {
+        "_id": "c41089b6-f30d-4b5f-8f66-b7508740e5cc",
+        "name": "Fone Bluetooth",
+        "description": "Fone de ouvido sem fio com cancelamento de ruído",
+        "price": 350.75,
+        "stock": {
+            "$numberLong": "20"
+        },
+        "category": "eletronicos",
+        "available": true,
+        "image_url": "https://example.com/fone.png"
+    },
+    {
+        "_id": "c0d0f816-3d79-482b-873f-86a4a4d6e98c",
+        "name": "Livro de Ficção",
+        "description": "Romance épico de fantasia medieval",
+        "price": 89.90,
+        "stock": {
+            "$numberLong": "15"
+        },
+        "category": "literatura",
+        "available": true,
+        "image_url": "https://example.com/livro.png"
+    },
+    {
+        "_id": "b2195f65-4c76-4a57-a6b1-7f9ea5c68272",
+        "name": "Monitor 4K",
+        "description": "Monitor de 32 polegadas UHD para designers",
+        "price": 2400.00,
+        "stock": {
+            "$numberLong": "7"
+        },
+        "category": "eletronicos",
+        "available": true,
+        "image_url": "https://example.com/monitor.png"
+    },
+    {
+        "_id": "a827e43d-9a8c-40a2-8c96-59c4db1f6145",
+        "name": "Violão Acústico",
+        "description": "Violão de cordas de nylon para iniciantes",
+        "price": 499.99,
+        "stock": {
+            "$numberLong": "10"
+        },
+        "category": "instrumentos",
+        "available": true,
+        "image_url": "https://example.com/violao.png"
+    },
+    {
+        "_id": "f61e4c6a-2d08-4e87-bf42-df3b5168c25d",
+        "name": "Câmera DSLR",
+        "description": "Câmera profissional para fotografia e vídeos",
+        "price": 3200.00,
+        "stock": {
+            "$numberLong": "3"
+        },
+        "category": "fotografia",
+        "available": true,
+        "image_url": "https://example.com/camera.png"
+    },
+    {
+        "_id": "d4c93a0c-56a5-4969-a46d-69b74db04f57",
+        "name": "Bicicleta MTB",
+        "description": "Bicicleta para trilhas e aventuras radicais",
+        "price": 2500.00,
+        "stock": {
+            "$numberLong": "4"
+        },
+        "category": "esportes",
+        "available": true,
+        "image_url": "https://example.com/bicicleta.png"
+    },
+    {
+        "_id": "2e40b57a-2ac8-4d52-872e-d7e6e617be02",
+        "name": "Teclado Mecânico",
+        "description": "Teclado mecânico RGB com switches personalizáveis",
+        "price": 599.00,
+        "stock": {
+            "$numberLong": "8"
+        },
+        "category": "eletronicos",
+        "available": true,
+        "image_url": "https://example.com/teclado.png"
+    },
+    {
+        "_id": "1fa3b0f4-6cde-4f7c-8e97-674f654a7359",
+        "name": "Cafeteira Automática",
+        "description": "Cafeteira programável com moedor embutido",
+        "price": 899.00,
+        "stock": {
+            "$numberLong": "6"
+        },
+        "category": "cozinha",
+        "available": true,
+        "image_url": "https://example.com/cafeteira.png"
+    }
+]
