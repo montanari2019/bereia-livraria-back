@@ -8,15 +8,16 @@ datasource db {
 }
 
 model usuario {
-  id            String  @id @default(uuid()) @map("_id")
-  email         String  @unique
+  id            String     @id @default(uuid()) @map("_id")
+  email         String     @unique
   name          String
-  doc           String  @unique
+  doc           String     @unique
   phone_number  String
-  tentativas    Int     @default(0)
+  tentativas    Int        @default(0)
   password      String
-  active_acount Boolean @default(false)
-  roles         String  @default("COMMON_USER")
+  active_acount Boolean    @default(false)
+  roles         String     @default("COMMON_USER")
+  endereco      endereco[]
 }
 
 model product {
@@ -28,4 +29,17 @@ model product {
   category    String
   available   Boolean @default(true)
   image_url   String
+}
+
+model endereco {
+  id                 String  @id @default(uuid()) @map("_id")
+  usuario_id         String
+  usuario            usuario @relation(fields: [usuario_id], references: [id])
+  name_address       String
+  address            String
+  number_address     String
+  cep                String
+  city_state_address String
+  complement         String
+  main_address       Boolean
 }

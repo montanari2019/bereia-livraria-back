@@ -6,6 +6,7 @@ import { AuthJwtModule } from './auth_jwt/auth_jwt.module';
 import { ProductModule } from './product/product.module';
 import { S3Module } from './s3/s3.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
+import { EnderecoModule } from './endereco/endereco.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
     AuthJwtModule,
     S3Module,
     ProductModule,
+    EnderecoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
