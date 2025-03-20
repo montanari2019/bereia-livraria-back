@@ -4,7 +4,7 @@ import { CustomAuthRequest } from 'src/auth_jwt/interface/custom-request.interfa
 import { UpdatePrimaryAddressInterface } from '../interfaces/update-address-primary.interface';
 import { MainAddressRepository } from '../repository/mainAddressRepository.service';
 import { FindAllActiveAddressRepository } from '../repository/findAllAddressRepository.service';
-import { CachingAddressService } from './cachingAddress.service';
+import { CachingFindAllAddressService } from './cachingAddress.service';
 
 @Injectable()
 export class UpdatePrimaryAddressServices
@@ -13,7 +13,7 @@ export class UpdatePrimaryAddressServices
   constructor(
     private readonly repositoryMainAddressRepository: MainAddressRepository,
     private readonly findAllAddressRepository: FindAllActiveAddressRepository,
-    private readonly cachingAddressService: CachingAddressService,
+    private readonly cachingFindAllAddressService: CachingFindAllAddressService,
   ) {}
 
   async updatePrimaryAddress(
@@ -45,7 +45,10 @@ export class UpdatePrimaryAddressServices
       const findAll =
         await this.findAllAddressRepository.findAllAddresses(user_id);
 
-      await this.cachingAddressService.createCachingAddress(user_id, findAll);
+      await this.cachingFindAllAddressService.createCachingAddress(
+        user_id,
+        findAll,
+      );
 
       return responseReturn;
     } catch (error) {

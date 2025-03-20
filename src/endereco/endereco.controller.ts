@@ -21,6 +21,7 @@ import { MessageResponseDto } from 'src/@types/message-response.dto';
 import { FindAllActiveAddressService } from './services/findAllAddress.service';
 import { FindAllAddressesDto } from './dto/find-all-address.dto';
 import { CustomAuthRequest } from 'src/auth_jwt/interface/custom-request.interface';
+import { InactiveAddressServices } from './services/inactiveAddress.service';
 
 @Controller('endereco')
 @ApiBearerAuth()
@@ -31,6 +32,7 @@ export class EnderecoController {
     private readonly updateEnderecoService: UpdateAddressService,
     private readonly updatePrimaryAdrressService: UpdatePrimaryAddressServices,
     private readonly findAllActiveAddressService: FindAllActiveAddressService,
+    private readonly inactiveAddressService: InactiveAddressServices,
   ) {}
 
   @Post('create')
@@ -73,6 +75,10 @@ export class EnderecoController {
       id_address,
       user_id,
     );
+  }
+  @Put('update/inactivate/:id_address')
+  updateInactivateAddress(@Param('id_address') id_address: string) {
+    return this.inactiveAddressService.inactivaAddress(id_address);
   }
 
   // @Delete(':id')

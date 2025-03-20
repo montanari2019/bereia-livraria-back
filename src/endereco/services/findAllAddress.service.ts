@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { FindAllAddressInterface } from '../interfaces/find-all-address.interface';
 import { FindAllAddressesDto } from '../dto/find-all-address.dto';
 import { FindAllActiveAddressRepository } from '../repository/findAllAddressRepository.service';
-import { CachingAddressService } from './cachingAddress.service';
+import { CachingFindAllAddressService } from './cachingAddress.service';
 
 @Injectable()
 export class FindAllActiveAddressService implements FindAllAddressInterface {
   constructor(
     private readonly findAllAddresseRepository: FindAllActiveAddressRepository,
-    private readonly cachingAddressService: CachingAddressService,
+    private readonly cachingAddressService: CachingFindAllAddressService,
   ) {}
   async findAllAddresses(id_user: string): Promise<FindAllAddressesDto[]> {
     try {

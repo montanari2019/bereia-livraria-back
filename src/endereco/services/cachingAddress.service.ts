@@ -8,7 +8,7 @@ import { FindAllAddressesDto } from '../dto/find-all-address.dto';
 import { CachingAddressInterface } from '../interfaces/caching-address.interface';
 
 @Injectable()
-export class CachingAddressService implements CachingAddressInterface {
+export class CachingFindAllAddressService implements CachingAddressInterface {
   constructor(private readonly cacheManager: CachingService) {}
 
   async createCachingAddress(
