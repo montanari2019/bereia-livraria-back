@@ -3,9 +3,11 @@ export enum KEY_CACHING_ENUM {
   TOTAL_COUNT_PRODUCT = 'COUNT_PRODUCT',
   FIRST_PAGE_PRODUCT = 'FIRST_PAGE_PRODUCT',
   SEARCH_PRODUCT_CATEGORY = 'SEARCH_PRODUCT_CATEGORY',
+  ADDRESS_USER = 'ADDRESS_USER',
 }
 
 export const TIMESTAMP_CACHING = Object.freeze({
+  MIN_5: 5 * 60 * 1000, // 5 minutos
   MIN_10: 10 * 60 * 1000, // 10 minutos
   MIN_30: 30 * 60 * 1000, // 30 minutos
   HOUR_1: 60 * 60 * 1000, // 1 hora

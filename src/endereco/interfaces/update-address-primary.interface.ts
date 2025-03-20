@@ -1,3 +1,6 @@
 export interface UpdatePrimaryAddressInterface {
-  updatePrimaryAddress: (id_endereco: string) => Promise<{ message: string }>;
+  updatePrimaryAddress: (
+    id_endereco: string,
+    user_id: string,
+  ) => Promise<{ message: string }>;
 }

@@ -11,6 +11,9 @@ import { UpdatePrimaryAddressServices } from './services/updateAddressPrimary.se
 import { MainAddressRepository } from './repository/mainAddressRepository.service';
 import { CreateAddressRepository } from './repository/createAddressRepository.service';
 import { UpdateAddressRepository } from './repository/updateAddressRepository.service';
+import { FindAllActiveAddressRepository } from './repository/findAllAddressRepository.service';
+import { FindAllActiveAddressService } from './services/findAllAddress.service';
+import { CachingAddressService } from './services/cachingAddress.service';
 
 @Module({
   controllers: [EnderecoController],
@@ -20,10 +23,13 @@ import { UpdateAddressRepository } from './repository/updateAddressRepository.se
     VerifyQuantityAdressRepository,
     UpdateAddressService,
     UpdatePrimaryAddressServices,
+    FindAllActiveAddressService,
+    CachingAddressService,
 
     CreateAddressRepository,
     MainAddressRepository,
     UpdateAddressRepository,
+    FindAllActiveAddressRepository,
   ],
 })
 export class EnderecoModule {}

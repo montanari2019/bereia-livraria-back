@@ -14,7 +14,10 @@ export class ProductSearchByTermoService implements ProductSearchInterface {
     private readonly envConfig: EnvConfigService,
   ) {}
 
-  async searchProductsByTerm(value: string, page: number): Promise<any> {
+  async searchProductsByTerm(
+    value: string,
+    page: number,
+  ): Promise<ListarProdutosDto> {
     try {
       console.time('listarProductByTermo');
       const itemsPerPage = this.envConfig.getItensPerPage();

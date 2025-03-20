@@ -7,7 +7,7 @@ import { EnvConfigModule } from 'src/shared/infraestructure/env_config/env-confi
 import { ProductController } from './product.controller';
 import { CategoriasService } from './services/categorias.service';
 import { CreateProductService } from './services/createProduct.service';
-import { DeleteProductService } from './services/deletarProduct.services';
+import { DeleteProductService } from './services/deletarProduct.service';
 import { FindUniqueProductService } from './services/findUniqueProduct.service';
 import { ProductListagemService } from './services/productListagem.service';
 import { ProductSearchByCategoryService } from './services/productSearcByCategory.service';

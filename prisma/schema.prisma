@@ -45,8 +45,9 @@ model endereco {
   number_address     String
   cep                String
   city_state_address String
+  main_address       Boolean
+  active             Boolean  @default(true)
   complement         String
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt()
-  main_address       Boolean
 }

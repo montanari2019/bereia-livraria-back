@@ -17,6 +17,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiConsumes,
+  ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
 import { CreateProductWithFileDto } from './dto/create-product-with-file.dto';
@@ -24,7 +25,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CategoriasService } from './services/categorias.service';
 import { CreateProductService } from './services/createProduct.service';
-import { DeleteProductService } from './services/deletarProduct.services';
+import { DeleteProductService } from './services/deletarProduct.service';
 import { ProductListagemService } from './services/productListagem.service';
 import { ProductSearchByCategoryService } from './services/productSearcByCategory.service';
 import { ProductSearchByTermoService } from './services/productSearch.service';
@@ -33,6 +34,8 @@ import { JwtAuthGuard } from 'src/auth_jwt/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/roles/roles.guard';
 import { Roles } from 'src/roles/roles.decorator';
 import { ROLES_ENUM } from 'src/roles/roles.enum';
+import { CategoriasResponseDto } from './dto/categorias-response.dto';
+import { ListarProdutosDto } from './dto/listar-produtos.dto';
 
 @Controller('product')
 @ApiBearerAuth()
@@ -94,15 +97,18 @@ export class ProductController {
   }
 
   @Get('categorias')
+  @ApiOkResponse({ type: CategoriasResponseDto })
   findAll() {
     return this.categoriasProducts.ListarCategorias();
   }
 
   @Get('all')
+  @ApiOkResponse({ type: ListarProdutosDto })
   async listarProdutos(@Query('page') page: number = 1): Promise<any> {
     return this.listagemProducts.listarProduct(page);
   }
   @Get('/termo')
+  @ApiOkResponse({ type: ListarProdutosDto })
   async listarProdutosByTermo(
     @Query('page') page: number = 1,
     @Query('value') value: string,
@@ -110,6 +116,7 @@ export class ProductController {
     return this.searchByTermoProducts.searchProductsByTerm(value, page);
   }
   @Get('/categoria')
+  @ApiOkResponse({ type: ListarProdutosDto })
   async listarProdutosByCategoria(
     @Query('page') page: number = 1,
     @Query('value') value: string,
