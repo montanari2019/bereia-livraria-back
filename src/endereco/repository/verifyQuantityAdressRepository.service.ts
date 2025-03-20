@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { VerifyQuantityAdressInterface } from '../interfaces/verify-quantity-adress.interface';
 
 @Injectable()
-export class VerifyQuantityAdressService
+export class VerifyQuantityAdressRepository
   implements VerifyQuantityAdressInterface
 {
   constructor(private readonly prisma: PrismaService) {}
