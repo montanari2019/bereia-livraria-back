@@ -1,14 +1,21 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateProductInterface } from '../interfaces/create-product.interface';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { S3UploadImagemService } from 'src/s3/services/s3UploadImage.service';
+import { CustomAuthRequest } from 'src/auth_jwt/interface/custom-request.interface';
+import { REQUEST } from '@nestjs/core';
 
 @Injectable()
 export class CreateProductService implements CreateProductInterface {
   constructor(
     private readonly Prisma: PrismaService,
     private readonly UploadFileService: S3UploadImagemService,
+    @Inject(REQUEST) private readonly request: CustomAuthRequest,
   ) {}
   async createProduct(
     body: CreateProductDto,
@@ -22,6 +29,7 @@ export class CreateProductService implements CreateProductInterface {
       return await this.Prisma.product
         .create({
           data: {
+            user_create_id: this.request.payload.id,
             category,
             description,
             name,

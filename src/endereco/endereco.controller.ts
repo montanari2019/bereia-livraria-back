@@ -1,38 +1,36 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
+  Controller,
   Param,
-  Delete,
-  UseGuards,
+  Post,
+  Put,
   Req,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import { PayloadUserValidate } from 'src/auth_jwt/dto/payload_user_validate.dto';
+import { JwtAuthGuard } from 'src/auth_jwt/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/roles/roles.guard';
 import { CreateEnderecoDto } from './dto/create-endereco.dto';
 import { UpdateEnderecoDto } from './dto/update-endereco.dto';
 import { CreateEnderecoService } from './services/createEndereco.service';
-import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth_jwt/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/roles/roles.guard';
-import { Roles } from 'src/roles/roles.decorator';
-import { ROLES_ENUM } from 'src/roles/roles.enum';
-import { PayloadUserValidate } from 'src/auth_jwt/dto/payload_user_validate.dto';
+import { UpdateAddressService } from './services/updateAddress.service';
+import { UpdatePrimaryAddressServices } from './services/updateAddressPrimary.service';
 
 @Controller('endereco')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class EnderecoController {
-  constructor(private readonly createEnderecoService: CreateEnderecoService) {}
+  constructor(
+    private readonly createEnderecoService: CreateEnderecoService,
+    private readonly updateEnderecoService: UpdateAddressService,
+    private readonly updatePrimaryAdrressService: UpdatePrimaryAddressServices,
+  ) {}
 
   @Post('create')
   @ApiBody({ type: CreateEnderecoDto })
-  create(@Body() createEnderecoDto: CreateEnderecoDto, @Req() request) {
-    const user = request.payload as PayloadUserValidate;
-    return this.createEnderecoService.createEndereco(
-      createEnderecoDto,
-      user.id,
-    );
+  create(@Body() createEnderecoDto: CreateEnderecoDto) {
+    return this.createEnderecoService.createEndereco(createEnderecoDto);
   }
 
   // @Get()
@@ -45,10 +43,20 @@ export class EnderecoController {
   //   return this.enderecoService.findOne(+id);
   // }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateEnderecoDto: UpdateEnderecoDto) {
-  //   return this.enderecoService.update(+id, updateEnderecoDto);
-  // }
+  @Put('update/:id_address')
+  update(
+    @Param('id_address') id_address: string,
+    @Body() updateEnderecoDto: UpdateEnderecoDto,
+  ) {
+    return this.updateEnderecoService.updateAddress(
+      id_address,
+      updateEnderecoDto,
+    );
+  }
+  @Put('update/primaryaddress/:id_address')
+  updatePirmaryAddress(@Param('id_address') id_address: string) {
+    return this.updatePrimaryAdrressService.updatePrimaryAddress(id_address);
+  }
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {

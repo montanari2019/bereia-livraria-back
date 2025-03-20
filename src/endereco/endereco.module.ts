@@ -6,10 +6,19 @@ import { AuthJwtModule } from 'src/auth_jwt/auth_jwt.module';
 import { CachingModule } from 'src/caching/caching.module';
 import { EnvConfigModule } from 'src/shared/infraestructure/env_config/env-config.module';
 import { VerifyQuantityAdressService } from './services/verifyQuantityAdress.service';
+import { UpdateAddressService } from './services/updateAddress.service';
+import { UpdatePrimaryAddressServices } from './services/updateAddressPrimary.service';
+import { PrimaryAddressRepository } from './repository/updatePrimaryAddressRepository.service';
 
 @Module({
   controllers: [EnderecoController],
   imports: [PrismaModule, AuthJwtModule, CachingModule, EnvConfigModule],
-  providers: [CreateEnderecoService, VerifyQuantityAdressService],
+  providers: [
+    CreateEnderecoService,
+    VerifyQuantityAdressService,
+    UpdateAddressService,
+    UpdatePrimaryAddressServices,
+    PrimaryAddressRepository,
+  ],
 })
 export class EnderecoModule {}

@@ -17,29 +17,36 @@ model usuario {
   password      String
   active_acount Boolean    @default(false)
   roles         String     @default("COMMON_USER")
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt()
   endereco      endereco[]
 }
 
 model product {
-  id          String  @id @default(uuid()) @map("_id")
-  name        String
-  description String
-  price       Float
-  stock       Int     @default(1)
-  category    String
-  available   Boolean @default(true)
-  image_url   String
+  id             String   @id @default(uuid()) @map("_id")
+  user_create_id String
+  name           String
+  description    String
+  price          Float
+  stock          Int      @default(1)
+  category       String
+  available      Boolean  @default(true)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt()
+  image_url      String
 }
 
 model endereco {
-  id                 String  @id @default(uuid()) @map("_id")
+  id                 String   @id @default(uuid()) @map("_id")
   usuario_id         String
-  usuario            usuario @relation(fields: [usuario_id], references: [id])
+  usuario            usuario  @relation(fields: [usuario_id], references: [id])
   name_address       String
   address            String
   number_address     String
   cep                String
   city_state_address String
   complement         String
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt()
   main_address       Boolean
 }

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { VerifyQuantityAdressInterface } from '../interfaces/verify-quanatity-adress.interface';
+import { VerifyQuantityAdressInterface } from '../interfaces/verify-quantity-adress.interface';
 
 @Injectable()
 export class VerifyQuantityAdressService

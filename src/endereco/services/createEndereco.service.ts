@@ -1,21 +1,22 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateEnderecoInterface } from '../interfaces/create-endereco.interface';
 import { CreateEnderecoDto } from '../dto/create-endereco.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { VerifyQuantityAdressService } from './verifyQuantityAdress.service';
+import { REQUEST } from '@nestjs/core';
+import { CustomAuthRequest } from 'src/auth_jwt/interface/custom-request.interface';
 
 @Injectable()
 export class CreateEnderecoService implements CreateEnderecoInterface {
   constructor(
     private readonly prisma: PrismaService,
     private verifyAddresService: VerifyQuantityAdressService,
+    @Inject(REQUEST) private readonly request: CustomAuthRequest,
   ) {}
-  async createEndereco(
-    body: CreateEnderecoDto,
-    user_id: string,
-  ): Promise<{
+  async createEndereco(body: CreateEnderecoDto): Promise<{
     message: string;
   }> {
+    const user_id = this.request.payload.id;
     try {
       const count =
         await this.verifyAddresService.verifyQuantityAndAddress(user_id);
