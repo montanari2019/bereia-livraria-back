@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { CustomAuthRequest } from 'src/auth_jwt/interface/custom-request.interface';
 import { UpdatePrimaryAddressInterface } from '../interfaces/update-address-primary.interface';
-import { PrimaryAddressRepository } from '../repository/updatePrimaryAddressRepository.service';
+import { MainAddressRepository } from '../repository/mainAddressRepository.service';
 
 @Injectable()
 export class UpdatePrimaryAddressServices
@@ -10,7 +10,7 @@ export class UpdatePrimaryAddressServices
 {
   constructor(
     @Inject(REQUEST) private readonly request: CustomAuthRequest,
-    private readonly repositoryPrimaryAddressService: PrimaryAddressRepository,
+    private readonly repositoryMainAddressRepository: MainAddressRepository,
   ) {}
 
   async updatePrimaryAddress(
@@ -19,22 +19,22 @@ export class UpdatePrimaryAddressServices
     try {
       const user_id = this.request.payload.id;
       const current_address_primary =
-        await this.repositoryPrimaryAddressService.searchPrimaryAddress(
+        await this.repositoryMainAddressRepository.searchPrimaryAddress(
           user_id,
         );
 
       if (current_address_primary === null) {
-        return await this.repositoryPrimaryAddressService.updateNewPrimaryAddress(
+        return await this.repositoryMainAddressRepository.updateNewPrimaryAddress(
           id_endereco,
         );
       }
 
-      await this.repositoryPrimaryAddressService.updateCurrentPrimaryAddress(
+      await this.repositoryMainAddressRepository.updateCurrentPrimaryAddress(
         user_id,
         current_address_primary.id,
       );
 
-      return await this.repositoryPrimaryAddressService.updateNewPrimaryAddress(
+      return await this.repositoryMainAddressRepository.updateNewPrimaryAddress(
         id_endereco,
       );
     } catch (error) {

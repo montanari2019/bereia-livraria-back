@@ -11,30 +11,26 @@ export class UpdateAddressRepository {
     usuario_id: string,
     data: UpdateEnderecoDto,
   ): Promise<{ message: string }> {
-    try {
-      return await this.prisma.endereco
-        .update({
-          where: {
-            id: id_endereco,
-            usuario_id: usuario_id,
-          },
-          data: {
-            ...data,
-          },
-        })
-        .then(() => {
-          return {
-            message: 'Address updated successfully',
-          };
-        })
-        .catch((error) => {
-          throw new BadRequestException([
-            'Erro ao atualizar endereço',
-            error.message,
-          ]);
-        });
-    } catch (error) {
-      throw error;
-    }
+    return await this.prisma.endereco
+      .update({
+        where: {
+          id: id_endereco,
+          usuario_id: usuario_id,
+        },
+        data: {
+          ...data,
+        },
+      })
+      .then(() => {
+        return {
+          message: 'Address updated successfully',
+        };
+      })
+      .catch((error) => {
+        throw new BadRequestException([
+          'Erro ao atualizar endereço',
+          error.message,
+        ]);
+      });
   }
 }

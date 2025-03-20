@@ -8,7 +8,7 @@ import { EnvConfigModule } from 'src/shared/infraestructure/env_config/env-confi
 import { VerifyQuantityAdressRepository } from './repository/verifyQuantityAdressRepository.service';
 import { UpdateAddressService } from './services/updateAddress.service';
 import { UpdatePrimaryAddressServices } from './services/updateAddressPrimary.service';
-import { PrimaryAddressRepository } from './repository/updatePrimaryAddressRepository.service';
+import { MainAddressRepository } from './repository/mainAddressRepository.service';
 import { CreateAddressRepository } from './repository/createAddressRepository.service';
 import { UpdateAddressRepository } from './repository/updateAddressRepository.service';
 
@@ -22,7 +22,7 @@ import { UpdateAddressRepository } from './repository/updateAddressRepository.se
     UpdatePrimaryAddressServices,
 
     CreateAddressRepository,
-    PrimaryAddressRepository,
+    MainAddressRepository,
     UpdateAddressRepository,
   ],
 })

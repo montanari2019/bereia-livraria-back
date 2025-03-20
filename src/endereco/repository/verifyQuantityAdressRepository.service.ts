@@ -8,23 +8,19 @@ export class VerifyQuantityAdressRepository
 {
   constructor(private readonly prisma: PrismaService) {}
   async verifyQuantityAndAddress(id_user: string): Promise<number> {
-    try {
-      const count = await this.prisma.endereco
-        .count({
-          where: {
-            usuario_id: id_user,
-          },
-        })
-        .catch((error) => {
-          throw new BadRequestException([
-            'Error ao contar endereços',
-            error.message,
-          ]);
-        });
+    const count = await this.prisma.endereco
+      .count({
+        where: {
+          usuario_id: id_user,
+        },
+      })
+      .catch((error) => {
+        throw new BadRequestException([
+          'Error ao contar endereços',
+          error.message,
+        ]);
+      });
 
-      return count;
-    } catch (err) {
-      throw err;
-    }
+    return count;
   }
 }
