@@ -12,7 +12,14 @@ export class InactiveAddressServices implements InactiveAddressInterface {
   async inactivaAddress(id_endereco: string): Promise<MessageResponseDto> {
     // Implementa a lógica para inativar o endereço
     try {
-      return await this.inctivateAddressRepository.inactiveAddress(id_endereco);
+      const response = await this.inctivateAddressRepository.inactiveAddress(id_endereco);
+
+      
+
+
+
+
+      return response
     } catch (e) {
       throw e;
     }
