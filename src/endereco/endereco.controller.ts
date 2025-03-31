@@ -49,11 +49,6 @@ export class EnderecoController {
     return this.findAllActiveAddressService.findAllAddresses(user_id);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.enderecoService.findOne(+id);
-  // }
-
   @Put('update/:id_address')
   @ApiOkResponse({ type: MessageResponseDto })
   update(
@@ -77,8 +72,12 @@ export class EnderecoController {
     );
   }
   @Put('update/inactivate/:id_address')
-  updateInactivateAddress(@Param('id_address') id_address: string) {
-    return this.inactiveAddressService.inactivaAddress(id_address);
+  updateInactivateAddress(
+    @Param('id_address') id_address: string,
+    @Req() req: CustomAuthRequest,
+  ) {
+    const user_id = req.payload.id;
+    return this.inactiveAddressService.inactivaAddress(id_address, user_id);
   }
 
   // @Delete(':id')

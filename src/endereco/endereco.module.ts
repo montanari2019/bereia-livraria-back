@@ -16,6 +16,8 @@ import { FindAllActiveAddressService } from './services/findAllAddress.service';
 import { CachingFindAllAddressService } from './services/cachingAddress.service';
 import { InactiveAddressRepository } from './repository/inactiveAddressRepository.service';
 import { InactiveAddressServices } from './services/inactiveAddress.service';
+import { FindAllAnyAddressRepository } from './repository/FindAllAnyAddressRepository.service';
+import { SetTheFirstMainAddressRepository } from './repository/setTheFirstMainAddress.service';
 
 @Module({
   controllers: [EnderecoController],
@@ -34,6 +36,8 @@ import { InactiveAddressServices } from './services/inactiveAddress.service';
     UpdateAddressRepository,
     FindAllActiveAddressRepository,
     InactiveAddressRepository,
+    FindAllAnyAddressRepository,
+    SetTheFirstMainAddressRepository,
   ],
 })
 export class EnderecoModule {}
