@@ -25,6 +25,8 @@ export class ValidatorPasswordsServices implements ValidatorPasswordsInterface {
       throw new UnauthorizedException(['email ou senha estão incorretos']);
     }
 
+    await this.UpdateTentativaUser.resetTentativas(email);
+
     return;
   }
 }
