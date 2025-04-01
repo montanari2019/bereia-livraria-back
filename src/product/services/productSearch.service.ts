@@ -7,7 +7,7 @@ import { ListarProdutosDto } from '../dto/listar-produtos.dto';
 import { ProductSearchInterface } from '../interfaces/product-search.interface';
 import { CountProductRepository } from '../repository/countProductRepository.service';
 import { FindProductByTermoRepository } from '../repository/findProductByTermoRepository.service';
-import { CachingProductsByTermo } from './cachingProductsByTermoservice';
+import { CachingProductsByTermo } from './cachingProductsByTermo.service';
 
 @Injectable()
 export class ProductSearchByTermoService implements ProductSearchInterface {

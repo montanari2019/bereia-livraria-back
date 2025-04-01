@@ -26,7 +26,7 @@ import { ProductSearcByCategoryRepository } from './repository/productSearcByCat
 import { CachingProductsByCategory } from './services/cachingProductsByCategory.service';
 import { CachingFindFirstPageProductService } from './services/cachingFindFirstPageProduct.service';
 import { FindProductByTermoRepository } from './repository/findProductByTermoRepository.service';
-import { CachingProductsByTermo } from './services/cachingProductsByTermoservice';
+import { CachingProductsByTermo } from './services/cachingProductsByTermo.service';
 import { UpdateProductRepository } from './repository/updateProductRepository.service';
 import { UpdateProductFileRepository } from './repository/updateProductFileRepository.service';
 
