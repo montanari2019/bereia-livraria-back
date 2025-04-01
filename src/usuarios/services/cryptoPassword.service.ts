@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import * as crypto from 'crypto';
+import * as bcrypt from 'bcrypt';
 import { EnvConfigService } from 'src/shared/infraestructure/env_config/env_config.service';
 import { CryptoPassordUsuariosInterface } from '../interface/crypto_password_usuarios.interface';
-import * as bcrypt from 'bcrypt';
-import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CryptoPasswordUsuariosService

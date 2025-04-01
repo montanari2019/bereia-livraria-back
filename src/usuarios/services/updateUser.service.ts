@@ -1,74 +1,40 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { UpdateUsuariosServiceInterface } from '../interface/update_usuarios_service.interface';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsuarioPublicDto } from '../dto/public-usuario.dto';
+import { UpdateUsuariosServiceInterface } from '../interface/update_usuarios_service.interface';
+import { ActivatedAccountRepository } from '../repository/activatedAccountRepository.service';
+import { BlockedUserRepository } from '../repository/blockedRepository.service';
+import { FindUserByIdRepository } from '../repository/findUserByIdRepository.service';
+import { UpdateUserRepository } from '../repository/updateUserRepository.service';
 @Injectable()
 export class UpdateUsuariosService implements UpdateUsuariosServiceInterface {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private readonly blockedUserRepository: BlockedUserRepository,
+    private readonly activatedAccountRepository: ActivatedAccountRepository,
+    private readonly findUserByIdRepository: FindUserByIdRepository,
+    private readonly updateUserRepository: UpdateUserRepository,
+  ) {}
   async blockedAccount(email: string): Promise<void> {
-    await this.prisma.usuario
-      .update({
-        where: { email },
-        data: {
-          active_acount: false,
-        },
-      })
-      .catch((error) => {
-        throw new InternalServerErrorException([
-          'Erro ao bloquear o usuário',
-          error,
-        ]);
-      });
-
-    return;
+    return await this.blockedUserRepository.blockedAccount(email);
   }
   async updateUser(updateUser: UsuarioPublicDto, user_id: string) {
     try {
-      await this.findUserUpdate(user_id);
+      await this.findOutIfUserReally(user_id);
 
-      await this.prisma.usuario
-        .update({
-          where: { id: user_id },
-          data: {
-            doc: updateUser.doc,
-            email: updateUser.email,
-            name: updateUser.name,
-            phone_number: updateUser.phone_number,
-          },
-        })
-        .catch((error) => {
-          throw new InternalServerErrorException([
-            'Erro ao alterar o usuário',
-            error,
-          ]);
-        });
-
-      return { message: 'Usuário alterado com sucesso!' };
+      return await this.updateUserRepository.update(updateUser, user_id);
     } catch (error) {
       throw error;
     }
   }
 
-  async findUserUpdate(id_user: string) {
-    const user = await this.prisma.usuario
-      .findUnique({
-        where: { id: id_user },
-      })
-      .catch((error) => {
-        throw new InternalServerErrorException([
-          'Erro ao procurar o usuário',
-          error,
-        ]);
-      });
+  async findOutIfUserReally(id_user: string) {
+    const user = await this.findUserByIdRepository.findUserById(id_user);
 
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
     }
   }
 
-  async activatedAccount(tokenActive: string) {}
+  async activatedAccount(tokenActive: string) {
+    await this.activatedAccountRepository.activatedAccount('EMAIL DO USUÁRIO');
+  }
 }
