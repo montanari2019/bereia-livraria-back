@@ -9,14 +9,17 @@ import { S3UploadImagemService } from 'src/s3/services/s3UploadImage.service';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { UpdateProductInterface } from '../interfaces/update-product.interface';
 import { FindUniqueProductService } from './findUniqueProduct.service';
+import { UpdateProductRepository } from '../repository/updateProductRepository.service';
+import { UpdateProductFileRepository } from '../repository/updateProductFileRepository.service';
 
 @Injectable()
 export class UpdateProductService implements UpdateProductInterface {
   constructor(
-    private readonly Prisma: PrismaService,
     private readonly uploadImage: S3UploadImagemService,
     private readonly deleteImage: S3DeleteImagemService,
     private readonly findUniqueProductService: FindUniqueProductService,
+    private readonly updateProductRepository: UpdateProductRepository,
+    private readonly updateProductFileRepository: UpdateProductFileRepository,
   ) {}
   async updateProduct(
     id_product: string,
@@ -25,26 +28,7 @@ export class UpdateProductService implements UpdateProductInterface {
     await this.findUniqueProductService.fundUniqueProductById(id_product);
 
     try {
-      return await this.Prisma.product
-        .update({
-          where: {
-            id: id_product,
-          },
-          data: {
-            ...body,
-          },
-        })
-        .then(() => {
-          return {
-            menssage: 'Product editado com sucesso!',
-          };
-        })
-        .catch((error) => {
-          throw new InternalServerErrorException([
-            'Erro ao editar product',
-            error.message,
-          ]);
-        });
+      return await this.updateProductRepository.updateProduct(id_product, body);
     } catch (error) {
       throw error;
     }
@@ -56,19 +40,7 @@ export class UpdateProductService implements UpdateProductInterface {
         await this.findUniqueProductService.fundUniqueProductById(id_product);
       const { urlFile } = await this.uploadImage.uploadFile(file);
 
-      await this.Prisma.product
-        .update({
-          where: {
-            id: id_product,
-          },
-          data: {
-            image_url: urlFile,
-          },
-        })
-        .catch((error) => {
-          console.log(error.mensage);
-          throw new BadRequestException(['Error ao alterar imagem do produto']);
-        });
+      await this.updateProductFileRepository.updateProduct(id_product, urlFile);
 
       await this.deleteImage.deleteFile(data.image_url);
 

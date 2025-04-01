@@ -1,57 +1,43 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { CachingService } from 'src/caching/caching.service';
-import {
-  KEY_CACHING_ENUM,
-  TIMESTAMP_CACHING,
-} from 'src/caching/enum/key-caching.enum';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 import { EnvConfigService } from 'src/shared/infraestructure/env_config/env_config.service';
 import { ListarProdutosDto } from '../dto/listar-produtos.dto';
 import { ProductDto } from '../dto/product.dto';
 import { ProductLisatagemInterface } from '../interfaces/product-list.interface';
+import { CountProductRepository } from '../repository/countProductRepository.service';
+import { FindAllPaginateProductRepository } from '../repository/findAllPaginateProductRepository.service';
+import { FindAllTheFirstPageProductRepostory } from '../repository/findAllTheFirstPageProductRepostory.service';
+import { CachingCountProductService } from './cachingCountProduct.service';
+import { CachingFindFirstPageProductService } from './cachingFindFirstPageProduct.service';
 
 @Injectable()
 export class ProductListagemService implements ProductLisatagemInterface {
   constructor(
-    private readonly prisma: PrismaService,
-    private readonly cacheManager: CachingService,
+    private readonly cacheCountProductManager: CachingCountProductService,
+    private readonly cacheFindFirstPagerProductManager: CachingFindFirstPageProductService,
     private readonly envConfig: EnvConfigService,
+    private readonly findAllPagianteRepository: FindAllPaginateProductRepository,
+    private readonly findAllTheFirstPageRepository: FindAllTheFirstPageProductRepostory,
+    private readonly countProductRepository: CountProductRepository,
   ) {}
   async listarProduct(page: number): Promise<ListarProdutosDto> {
     try {
       const itemsPerPage = this.envConfig.getItensPerPage();
-
       const cachedTotalCountData = await this.countProducts();
       const totalPages = Math.ceil(cachedTotalCountData / itemsPerPage);
       const skip = (page - 1) * itemsPerPage;
 
       if (page === 1) {
-        console.timeEnd('listarProduct');
         return {
           totalPages: totalPages,
           product: await this.listarPrimeiraPaginaProdutos(),
         };
       }
 
-      const product = await this.prisma.product
-        .findMany({
-          select: {
-            id: true,
-            name: true,
-            price: true,
-            available: true,
-            category: true,
-            description: true,
-            image_url: true,
-            stock: true,
-          },
-          skip: skip,
-          take: itemsPerPage,
-        })
-        .catch((error) => {
-          console.log(error.mensage);
-          throw new BadRequestException(['Error ao buscar produtos']);
-        });
+      const product =
+        await this.findAllPagianteRepository.findAllPaginateProduct(
+          skip,
+          itemsPerPage,
+        );
 
       return {
         totalPages,
@@ -64,19 +50,17 @@ export class ProductListagemService implements ProductLisatagemInterface {
 
   async countProducts() {
     try {
-      var cachedTotalCountData = await this.cacheManager.getCaching<number>(
-        KEY_CACHING_ENUM.TOTAL_COUNT_PRODUCT,
-      );
+      var cachedTotalCountData =
+        await this.cacheCountProductManager.getCachingCount();
 
       if (cachedTotalCountData) {
         return cachedTotalCountData;
       }
 
-      cachedTotalCountData = await this.prisma.product.count();
-      await this.cacheManager.setCaching(
-        KEY_CACHING_ENUM.TOTAL_COUNT_PRODUCT,
+      cachedTotalCountData = await this.countProductRepository.count();
+
+      await this.cacheCountProductManager.createCachingCount(
         cachedTotalCountData,
-        TIMESTAMP_CACHING.MIN_30,
       );
 
       return cachedTotalCountData;
@@ -87,43 +71,17 @@ export class ProductListagemService implements ProductLisatagemInterface {
 
   async listarPrimeiraPaginaProdutos(): Promise<ProductDto[]> {
     try {
-      const cachedFirstPage = await this.cacheManager.getCaching<ProductDto[]>(
-        KEY_CACHING_ENUM.FIRST_PAGE_PRODUCT,
-      );
+      const cachedFirstPage =
+        await this.cacheFindFirstPagerProductManager.getCachingCount();
 
       if (cachedFirstPage) {
         return cachedFirstPage;
       }
-      const products = await this.prisma.product
-        .findMany({
-          select: {
-            id: true,
-            name: true,
-            price: true,
-            available: true,
-            category: true,
-            description: true,
-            image_url: true,
-            stock: true,
-          },
-          skip: 0,
-          take: this.envConfig.getItensPerPage(),
-          orderBy: {
-            name: 'asc',
-          },
-        })
-        .catch((error) => {
-          console.log(error.mensage);
-          throw new BadRequestException([
-            'Error ao buscar primeira pagina de produtos',
-          ]);
-        });
 
-      await this.cacheManager.setCaching(
-        KEY_CACHING_ENUM.FIRST_PAGE_PRODUCT,
-        products,
-        TIMESTAMP_CACHING.MIN_30,
-      );
+      const products =
+        await this.findAllTheFirstPageRepository.findAllTheFirstPage();
+
+      await this.cacheFindFirstPagerProductManager.createCachingCount(products);
 
       return products;
     } catch (error) {

@@ -13,6 +13,22 @@ import { ProductListagemService } from './services/productListagem.service';
 import { ProductSearchByCategoryService } from './services/productSearcByCategory.service';
 import { ProductSearchByTermoService } from './services/productSearch.service';
 import { UpdateProductService } from './services/updateProduct.service';
+import { CategoryRepository } from './repository/categoryRepository.service';
+import { CachingCategoriasService } from './services/cachingCategorias.service';
+import { CreateProductRepository } from './repository/createProductRepository.service';
+import { DeleteProductRepository } from './repository/deleteProductRepository.service';
+import { FindUniqueProductRepository } from './repository/findUniqueRepository.service';
+import { FindAllPaginateProductRepository } from './repository/findAllPaginateProductRepository.service';
+import { FindAllTheFirstPageProductRepostory } from './repository/findAllTheFirstPageProductRepostory.service';
+import { CountProductRepository } from './repository/countProductRepository.service';
+import { CachingCountProductService } from './services/cachingCountProduct.service';
+import { ProductSearcByCategoryRepository } from './repository/productSearcByCategoryRepository.service';
+import { CachingProductsByCategory } from './services/cachingProductsByCategory.service';
+import { CachingFindFirstPageProductService } from './services/cachingFindFirstPageProduct.service';
+import { FindProductByTermoRepository } from './repository/findProductByTermoRepository.service';
+import { CachingProductsByTermo } from './services/cachingProductsByTermo.service';
+import { UpdateProductRepository } from './repository/updateProductRepository.service';
+import { UpdateProductFileRepository } from './repository/updateProductFileRepository.service';
 
 @Module({
   controllers: [ProductController],
@@ -25,6 +41,23 @@ import { UpdateProductService } from './services/updateProduct.service';
     ProductListagemService,
     ProductSearchByTermoService,
     ProductSearchByCategoryService,
+    CachingCategoriasService,
+    CachingCountProductService,
+    CachingFindFirstPageProductService,
+    CachingProductsByCategory,
+    CachingProductsByTermo,
+
+    CategoryRepository,
+    CreateProductRepository,
+    DeleteProductRepository,
+    FindUniqueProductRepository,
+    FindAllPaginateProductRepository,
+    FindAllTheFirstPageProductRepostory,
+    CountProductRepository,
+    ProductSearcByCategoryRepository,
+    FindProductByTermoRepository,
+    UpdateProductRepository,
+    UpdateProductFileRepository,
   ],
   imports: [
     PrismaModule,

@@ -1,28 +1,16 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 import { DeleteUsuarioInterface } from '../interface/delete_usuario.interface';
-import { FindUniqueUserService } from './findUnique.service';
+import { DeleteUserRepository } from '../repository/deleteUserRepository.service';
 
 @Injectable()
 export class DeleteUsuariosService implements DeleteUsuarioInterface {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly deleteUserRepository: DeleteUserRepository) {}
 
   async deleteUser(id_user: string) {
-    await this.prisma.usuario
-      .delete({
-        where: {
-          id: id_user,
-        },
-      })
-      .catch((error) => {
-        throw new InternalServerErrorException([
-          'Erro ao deletar usuario',
-          error.message,
-        ]);
-      });
-
-    return {
-      mensage: `Usuario eliminado corretamente`,
-    };
+    try {
+      return await this.deleteUserRepository.deleteUser(id_user);
+    } catch (error) {
+      throw error;
+    }
   }
 }

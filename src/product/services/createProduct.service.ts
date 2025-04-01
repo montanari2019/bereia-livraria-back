@@ -1,54 +1,36 @@
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
-import { CreateProductInterface } from '../interfaces/create-product.interface';
-import { CreateProductDto } from '../dto/create-product.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 import { S3UploadImagemService } from 'src/s3/services/s3UploadImage.service';
-import { CustomAuthRequest } from 'src/auth_jwt/interface/custom-request.interface';
-import { REQUEST } from '@nestjs/core';
+import { CreateProductRepositoryDto } from '../dto/create-product-repository.dto';
+import { CreateProductDto } from '../dto/create-product.dto';
+import { CreateProductInterface } from '../interfaces/create-product.interface';
+import { CreateProductRepository } from '../repository/createProductRepository.service';
 
 @Injectable()
 export class CreateProductService implements CreateProductInterface {
   constructor(
-    private readonly Prisma: PrismaService,
+    private readonly createProductRepository: CreateProductRepository,
     private readonly UploadFileService: S3UploadImagemService,
-    @Inject(REQUEST) private readonly request: CustomAuthRequest,
   ) {}
   async createProduct(
     body: CreateProductDto,
     file: Express.Multer.File,
+    user_id: string,
   ): Promise<any> {
     const { category, description, name, price } = body;
 
     try {
       const { urlFile } = await this.UploadFileService.uploadFile(file);
 
-      return await this.Prisma.product
-        .create({
-          data: {
-            user_create_id: this.request.payload.id,
-            category,
-            description,
-            name,
-            price: Number(price),
-            image_url: urlFile,
-          },
-        })
-        .then(() => {
-          return {
-            menssage: 'Product criado com sucesso!',
-            product_name: name,
-          };
-        })
-        .catch((error) => {
-          throw new InternalServerErrorException([
-            'Erro ao criar product',
-            error.message,
-          ]);
-        });
+      const object: CreateProductRepositoryDto = {
+        category,
+        description,
+        name,
+        price: Number(price),
+        image_url: urlFile,
+        user_create_id: user_id,
+      };
+
+      return await this.createProductRepository.createProduct(object);
     } catch (error) {
       throw error;
     }

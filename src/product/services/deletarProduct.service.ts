@@ -1,13 +1,13 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 import { S3DeleteImagemService } from 'src/s3/services/s3DeleteImage.service';
-import { FindUniqueProductService } from './findUniqueProduct.service';
 import { DeleteProductInterface } from '../interfaces/delete-product.interface';
+import { DeleteProductRepository } from '../repository/deleteProductRepository.service';
+import { FindUniqueProductService } from './findUniqueProduct.service';
 
 @Injectable()
 export class DeleteProductService implements DeleteProductInterface {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly deleteProductRepository: DeleteProductRepository,
     private readonly deleteImageS3Service: S3DeleteImagemService,
     private readonly findUniqueProduct: FindUniqueProductService,
   ) {}
@@ -19,20 +19,7 @@ export class DeleteProductService implements DeleteProductInterface {
 
       await this.deleteImageS3Service.deleteFile(product.image_url);
 
-      await this.prisma.product
-        .delete({
-          where: {
-            id: id_product,
-          },
-        })
-        .catch((error) => {
-          console.log(error.mensage);
-          throw new BadRequestException(['Error ao buscar deletar produto']);
-        });
-
-      return {
-        message: 'Product deleted successfully!',
-      };
+      return await this.deleteProductRepository.deleteProduct(id_product);
     } catch (error) {
       throw error;
     }

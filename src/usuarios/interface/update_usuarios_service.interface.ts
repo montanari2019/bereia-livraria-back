@@ -8,7 +8,7 @@ export interface UpdateUsuariosServiceInterface {
     message: string;
   }>;
 
-  findUserUpdate: (id_user: string) => Promise<void>;
+  findOutIfUserReally: (id_user: string) => Promise<void>;
 
   activatedAccount: (tokenActive: string) => Promise<void>;
   blockedAccount: (email: string) => Promise<void>;
