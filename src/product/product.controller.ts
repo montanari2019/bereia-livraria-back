@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -36,6 +37,7 @@ import { Roles } from 'src/roles/roles.decorator';
 import { ROLES_ENUM } from 'src/roles/roles.enum';
 import { CategoriasResponseDto } from './dto/categorias-response.dto';
 import { ListarProdutosDto } from './dto/listar-produtos.dto';
+import { CustomAuthRequest } from 'src/auth_jwt/interface/custom-request.interface';
 
 @Controller('product')
 @ApiBearerAuth()
@@ -59,9 +61,16 @@ export class ProductController {
   create(
     @Body() createProductDto: CreateProductDto,
     @UploadedFile() file: Express.Multer.File,
+    @Req() req: CustomAuthRequest,
   ) {
-    return this.createProductService.createProduct(createProductDto, file);
+    const user_id = req.payload.id;
+    return this.createProductService.createProduct(
+      createProductDto,
+      file,
+      user_id,
+    );
   }
+
   @Put('update/:id')
   @ApiBody({ type: UpdateProductDto })
   update(
